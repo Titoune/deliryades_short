@@ -16,7 +16,6 @@ class LinksController extends AppController
     public function create()
     {
         $this->request->allowMethod('post');
-        if (in_array($this->request->clientIp(), AUTHORIZED_IPS)) {
 
             $link = $this->Links->find()->where(['Links.url' => $this->request->getData('url')])->order(['Links.created' => 'desc'])->first();
             if ($link) {
@@ -45,10 +44,7 @@ class LinksController extends AppController
                     $this->api_response_flash = reset($errors);
                 }
             }
-        } else {
-            $this->api_response_code = 401;
-            $this->api_response_flash = "unauthorized";
-        }
+
     }
 
     public function read($uid)
